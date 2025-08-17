@@ -1,7 +1,124 @@
-<section class="hero"> <h1>Payments for Machines</h1> <p class="lead">Pay‑per‑call for agents/APIs with verifiable receipts. Agent wallets, spend caps, and real‑time settlement. Multi‑rail: USDC + Stripe in one API.</p> <div class="cta"> <a class="btn" href="#apply">Apply now (0% pilot fees)</a> <a class="btn outline" href="mailto:pilot@mnnr.app">pilot@mnnr.app</a> </div> </section> <section id="pain"> <h2>Why existing rails fail agents</h2> <div class="grid"> <div class="card"><b>CAPTCHAs/2FA</b><br><span class="muted">Payment systems block bots; your agents are bots.</span></div> <div class="card"><b>T+2 settlement</b><br><span class="muted">Machines can’t wait days for “OK.”</span></div> <div class="card"><b>Micropayment math</b><br><span class="muted">$0.01 value vs $0.30 fees kills machine commerce.</span></div> <div class="card"><b>Attribution chaos</b><br><span class="muted">Retries/fan‑out: what do you actually bill?</span></div> </div> </section> <section id="how"> <h2>How MNNR works</h2> <div class="grid"> <div class="card"><b>1) Define</b><br>Create wallet + metered contract (rate, unit, caps, scope).</div> <div class="card"><b>2) Authorize</b><br>Issue a short‑lived allowance token (JWT) for the task.</div> <div class="card"><b>3) Settle</b><br>Per‑call/second settlement → cryptographic receipt (SHA‑256).</div> </div> </section> <section id="code"> <h2>5‑line integration (Python)</h2> <pre><code>from mnnr import MNNR 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MNNR — Payments for Machines</title>
+  <meta name="description" content="Per-call payments, spend limits, and verifiable receipts for autonomous agents. Multi-rail: USDC + Stripe fallback.">
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --fg: #e7edf2;
+      --muted: #a7b0ba;
+      --accent: #20c997; /* MNNR neon green */
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
+      background:var(--bg);
+      color:var(--fg);
+    }
+    header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 28px;
+      background:#000;
+      border-bottom:1px solid #111;
+    }
+    header img {
+      height:42px;
+    }
+    header nav a {
+      margin-left:20px;
+      text-decoration:none;
+      font-weight:600;
+      color:var(--fg);
+      transition:color 0.2s;
+    }
+    header nav a:hover {
+      color:var(--accent);
+    }
+    main {
+      max-width: 880px;
+      margin: 8vh auto;
+      padding: 0 22px;
+      text-align: center;
+    }
+    h1 {
+      margin:0 0 8px;
+      font-size: 46px;
+      color:var(--accent);
+    }
+    p.lead {
+      font-size: 20px;
+      color: var(--muted);
+    }
+    section { margin:80px 0; }
+    h2 { font-size: 30px; margin-bottom:16px; color:var(--accent); }
+    .grid { display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card {
+      background:#111;
+      padding:18px;
+      border-radius:12px;
+      text-align:left;
+      border:1px solid #222;
+    }
+    .card b { color:var(--fg); }
+    .card span.muted { color:var(--muted); }
+    a.btn {
+      display:inline-block;
+      margin:12px 10px 0;
+      padding:12px 20px;
+      border-radius:10px;
+      background:var(--accent);
+      color:#051417;
+      text-decoration:none;
+      font-weight:700;
+    }
+    a.btn.outline {
+      background:transparent;
+      border:2px solid var(--accent);
+      color:var(--accent);
+    }
+    footer {
+      text-align:center;
+      padding:30px;
+      font-size:14px;
+      color:var(--muted);
+      border-top:1px solid #111;
+    }
+    footer a {
+      color:var(--accent);
+      text-decoration:none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="MNNR_Logo_Horizontal.png" alt="MNNR logo">
+    <nav>
+      <a href="#pain">Why</a>
+      <a href="#how">How</a>
+      <a href="#code">Code</a>
+      <a href="#fit">Built for</a>
+      <a href="#apply">Apply</a>
+    </nav>
+  </header>
 
-m = MNNR() # base_url configurable a = m.create_wallet("agent"); b = m.create_wallet("gpu") c = m.create_contract(a["id"], b["id"], 0.002) # $0.002/call m.authorize(c["id"], max_spend_usd=0.20) r = m.settle(c["id"], 1, {"job":"embed"}); print(m.verify_receipt(r))
+  <main>
+    <section class="hero">
+      <h1>Payments for Machines</h1>
+      <p class="lead">Pay-per-call for agents/APIs with verifiable receipts. Agent wallets, spend caps, and real-time settlement. Multi-rail: USDC + Stripe in one API.</p>
+      <div class="cta">
+        <a class="btn" href="#apply">Apply now (0% pilot fees)</a>
+        <a class="btn outline" href="mailto:pilot@mnnr.app">pilot@mnnr.app</a>
+      </div>
+    </section>
 
-Receipts are tamper‑evident JSON (SHA‑256 over canonical payload). Verify locally or via API.
-
-<section id="fit"> <h2>Built for</h2> <div class="grid"> <div class="card"><b>GPU providers</b><br>Per‑second clearing on job completion.</div> <div class="card"><b>API/data vendors</b><br>True pay‑per‑call; no invoice wrangling.</div> <div class="card"><b>Agent platforms</b><br>Wallets + budgets + receipts for devs.</div> </div> </section> <section id="apply"> <h2>Apply to the pilot</h2> <p class="muted">0% fees during pilot. Share basics and we’ll tailor your intro.</p> <div class="cta" style="margin-bottom:10px;"> <a class="btn" href="https://docs.google.com/forms/d/1IH2d5k-MPYy66SDoKwxegVvaejScxpSJ2PmWH6cI1TY/viewform" target="_blank" rel="noopener">Open the form</a> <a cl
+    <section id="pain">
+      <h2>Why existing rails fail agents</h2>
+      <div class="grid">
+        <div class="card"><b>CAPTCHAs/2FA</b><br><span class="muted">Payment systems block bots; your agents are bots.</span></div>
+        <div class=
