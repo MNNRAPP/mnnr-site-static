@@ -1,36 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MNNR — Money for machines</title>
-  <meta name="description" content="Per‑call payments, spend limits, and verifiable receipts for autonomous agents. Multi‑rail: USDC + Stripe fallback.">
-  <style>
-    :root { --bg:#0b0d10; --fg:#e7edf2; --muted:#a7b0ba; --accent:#20c997; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial; background:var(--bg); color:var(--fg); }
-    main { max-width: 820px; margin: 12vh auto; padding: 0 22px; }
-    h1 { margin:0 0 8px; font-size: 40px; letter-spacing: .2px; }
-    p { margin: 10px 0; line-height: 1.6; }
-    ul { margin: 14px 0 0 18px; color: var(--muted); }
-    li { margin: 6px 0; }
-    a.btn { display:inline-block; margin-top:18px; padding:12px 18px; border-radius:10px; background:var(--accent); color:#051417; text-decoration:none; font-weight:700; }
-    small { display:block; margin-top:24px; color:var(--muted); }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>MNNR</h1>
-    <p>Money for machines, settled by the minute.</p>
-    <p>Per‑call payments, spend limits, and verifiable receipts for autonomous agents. Multi‑rail settlement: USDC + Stripe fallback. Python/JS SDKs.</p>
-    <ul>
-      <li>Agent‑native wallets and task budgets</li>
-      <li>Metered contracts (per‑call, per‑second)</li>
-      <li>Cryptographic receipts anyone can verify</li>
-      <li>Simple SDKs and web console</li>
-    </ul>
-    <a class="btn" href="mailto:pilot@mnnr.app?subject=Pilot%20Request%20(MNNR)&body=Use%20case:%0AEst.%20volume:%0ARepo/site:%0AHandle%20(Discord/Telegram):%0A">Join the pilot</a>
-    <small>Built in Los Angeles — Aug 16, 2025. Spec v0.1 and SDKs shipping this week.</small>
-  </main>
-</body>
-</html>
+<section class="hero"> <h1>Payments for Machines</h1> <p class="lead">Pay‑per‑call for agents/APIs with verifiable receipts. Agent wallets, spend caps, and real‑time settlement. Multi‑rail: USDC + Stripe in one API.</p> <div class="cta"> <a class="btn" href="#apply">Apply now (0% pilot fees)</a> <a class="btn outline" href="mailto:pilot@mnnr.app">pilot@mnnr.app</a> </div> </section> <section id="pain"> <h2>Why existing rails fail agents</h2> <div class="grid"> <div class="card"><b>CAPTCHAs/2FA</b><br><span class="muted">Payment systems block bots; your agents are bots.</span></div> <div class="card"><b>T+2 settlement</b><br><span class="muted">Machines can’t wait days for “OK.”</span></div> <div class="card"><b>Micropayment math</b><br><span class="muted">$0.01 value vs $0.30 fees kills machine commerce.</span></div> <div class="card"><b>Attribution chaos</b><br><span class="muted">Retries/fan‑out: what do you actually bill?</span></div> </div> </section> <section id="how"> <h2>How MNNR works</h2> <div class="grid"> <div class="card"><b>1) Define</b><br>Create wallet + metered contract (rate, unit, caps, scope).</div> <div class="card"><b>2) Authorize</b><br>Issue a short‑lived allowance token (JWT) for the task.</div> <div class="card"><b>3) Settle</b><br>Per‑call/second settlement → cryptographic receipt (SHA‑256).</div> </div> </section> <section id="code"> <h2>5‑line integration (Python)</h2> <pre><code>from mnnr import MNNR 
+
+m = MNNR() # base_url configurable a = m.create_wallet("agent"); b = m.create_wallet("gpu") c = m.create_contract(a["id"], b["id"], 0.002) # $0.002/call m.authorize(c["id"], max_spend_usd=0.20) r = m.settle(c["id"], 1, {"job":"embed"}); print(m.verify_receipt(r))
+
+Receipts are tamper‑evident JSON (SHA‑256 over canonical payload). Verify locally or via API.
+
+<section id="fit"> <h2>Built for</h2> <div class="grid"> <div class="card"><b>GPU providers</b><br>Per‑second clearing on job completion.</div> <div class="card"><b>API/data vendors</b><br>True pay‑per‑call; no invoice wrangling.</div> <div class="card"><b>Agent platforms</b><br>Wallets + budgets + receipts for devs.</div> </div> </section> <section id="apply"> <h2>Apply to the pilot</h2> <p class="muted">0% fees during pilot. Share basics and we’ll tailor your intro.</p> <div class="cta" style="margin-bottom:10px;"> <a class="btn" href="https://docs.google.com/forms/d/1IH2d5k-MPYy66SDoKwxegVvaejScxpSJ2PmWH6cI1TY/viewform" target="_blank" rel="noopener">Open the form</a> <a cl
